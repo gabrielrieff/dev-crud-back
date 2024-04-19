@@ -5,7 +5,7 @@ import { hash } from "bcryptjs";
 export class CreateUserController {
   async handle(req: Request, res: Response) {
     try {
-      const { firstName, lastName, password, email } = req.body;
+      const { first_name, last_name, password, email } = req.body;
 
       const isEmailUsed = await prismaClient.user.findFirst({
         where: {
@@ -21,8 +21,8 @@ export class CreateUserController {
 
       const user = await prismaClient.user.create({
         data: {
-          first_name: firstName,
-          last_name: lastName,
+          first_name: first_name,
+          last_name: last_name,
           password: hashedPassword,
           email,
         },
