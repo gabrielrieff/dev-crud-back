@@ -33,9 +33,10 @@ export class ListTodosController {
             lt: endOfDay,
           },
         },
+        orderBy: {
+          created_at: "asc",
+        },
       });
-
-      console.log(todos);
 
       return res.status(200).json(todos);
     } catch (error) {
