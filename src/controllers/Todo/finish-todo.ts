@@ -40,9 +40,7 @@ export class FinishTodoController {
         },
       });
 
-      return res
-        .status(200)
-        .json({ message: "Todo finalizado com sucesso", finishedTodo });
+      return res.status(200).json(finishedTodo);
     } catch (error) {
       return res.status(500).json({ message: "Erro ao finalizar Todo" });
     }

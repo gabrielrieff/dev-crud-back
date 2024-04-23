@@ -25,7 +25,7 @@ export class CreateTodoController {
         },
       });
 
-      return res.status(201).json({ message: "Todo criado com sucesso", Todo });
+      return res.status(201).json(Todo);
     } catch (error) {
       return res.status(500).json({ message: "Erro ao criar todo" });
     }

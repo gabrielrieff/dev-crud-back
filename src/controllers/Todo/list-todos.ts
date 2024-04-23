@@ -13,11 +13,29 @@ export class ListTodosController {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
+      const today = new Date();
+      const startOfDay = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+      );
+      const endOfDay = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() + 1
+      );
+
       const todos = await prismaClient.todo.findMany({
         where: {
           userId: userId,
+          created_at: {
+            gte: startOfDay,
+            lt: endOfDay,
+          },
         },
       });
+
+      console.log(todos);
 
       return res.status(200).json(todos);
     } catch (error) {
