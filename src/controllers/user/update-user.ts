@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prismaClient from "../../services/prisma";
+import { hash } from "bcryptjs";
+import { verifyExistUser } from "../../Helpers/verify-exist-user";
 
 export class UpdateUserController {
   async handle(req: Request, res: Response) {
@@ -7,11 +9,7 @@ export class UpdateUserController {
       const userId = req.userId;
       const { first_name, last_name, email, password } = req.body;
 
-      const userExists = await prismaClient.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
+      const userExists = verifyExistUser(userId);
 
       if (!userExists) {
         return res.status(404).json({ message: "Usuário não encontrado" });
@@ -23,6 +21,11 @@ export class UpdateUserController {
         ...(email && { email }),
         ...(password && { password }),
       };
+
+      if (dataToUpdate.password) {
+        const hashedPassword = await hash(password, 8);
+        dataToUpdate.password = hashedPassword;
+      }
 
       if (Object.keys(dataToUpdate).length === 0) {
         return res
