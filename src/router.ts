@@ -9,6 +9,7 @@ import { CreateTodoController } from "./controllers/Todo/create-todo";
 import { DeleteTodoController } from "./controllers/Todo/delete-todo";
 import { FinishTodoController } from "./controllers/Todo/finish-todo";
 import { ListTodosController } from "./controllers/Todo/list-todos";
+import { UpdateTodoController } from "./controllers/Todo/update-todo";
 
 const router = Router();
 
@@ -24,5 +25,10 @@ router.post("/todo", isAuthenticated, new CreateTodoController().handle);
 router.delete("/todo/:id", isAuthenticated, new DeleteTodoController().handle);
 router.patch("/todo/:id", isAuthenticated, new FinishTodoController().handle);
 router.get("/todo", isAuthenticated, new ListTodosController().handle);
+router.patch(
+  "/todo-update/:id",
+  isAuthenticated,
+  new UpdateTodoController().handle
+);
 
 export { router };
