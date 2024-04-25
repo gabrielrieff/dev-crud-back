@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "vercel-build": "npx prisma migrate deploy"
+    "vercel-build": "npx prisma migrate deploy",
+    "build": "tsup src prisma generate && <actual-build-command>",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +43,7 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "tsup": "^8.0.2",
     "tsx": "^4.7.2"
   }
 }
