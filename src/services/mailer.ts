@@ -1,16 +1,30 @@
-import nodemailer from "nodemailer";
+import nodemailer, { TransportOptions } from "nodemailer";
 import path from "path";
 import fs from "fs";
 const hbs = require("handlebars");
 
-const transporter = nodemailer.createTransport({
-  host: process.env.HOST_SMTP,
-  port: process.env.PORT_SMTP,
+const host = process.env.HOST_SMTP;
+const port = process.env.PORT_SMTP;
+const user = process.env.USER_SMTP;
+const password = process.env.PASSWORD_SMTP;
+
+interface ExtendedTransportOptions extends TransportOptions {
+  host?: string;
+  port?: number;
   auth: {
-    user: process.env.USER_SMTP,
-    pass: process.env.PASSWORD_SMTP,
+    user?: number;
+    password?: number;
+  };
+}
+
+const transporter = nodemailer.createTransport({
+  host: host,
+  port: port,
+  auth: {
+    user: user,
+    pass: password,
   },
-});
+} as ExtendedTransportOptions);
 
 async function createEmailPathBase(pathUrl: string, context: any) {
   const templatePath = path.resolve(`./src/resource/mail/${pathUrl}.html`);
