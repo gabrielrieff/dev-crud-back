@@ -10,6 +10,7 @@ import { DeleteTodoController } from "./controllers/Todo/delete-todo";
 import { FinishTodoController } from "./controllers/Todo/finish-todo";
 import { ListTodosController } from "./controllers/Todo/list-todos";
 import { UpdateTodoController } from "./controllers/Todo/update-todo";
+import { RecoverPasswordController } from "./controllers/user/recover-password";
 
 const router = Router();
 
@@ -19,6 +20,7 @@ router.post("/session", new AuthUserController().handle);
 router.delete("/user/:id", isAuthenticated, new DeleteUserController().handle);
 router.get("/detail", isAuthenticated, new DetailUserController().handle);
 router.patch("/user", isAuthenticated, new UpdateUserController().handle);
+router.post("/recover-password", new RecoverPasswordController().handle);
 
 //todo
 router.post("/todo", isAuthenticated, new CreateTodoController().handle);
