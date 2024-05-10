@@ -10,7 +10,8 @@
     "dev": "tsx watch src/server.ts",
     "vercel-build": "npx prisma migrate deploy",
     "build": "tsup src prisma generate && <actual-build-command>",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +33,9 @@
     "eslint-plugin-promise": "^6.1.1",
     "globals": "^15.0.0",
     "prisma": "^5.12.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "uuidv4": "^6.2.13",
+    "vitest": "^1.6.0"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
