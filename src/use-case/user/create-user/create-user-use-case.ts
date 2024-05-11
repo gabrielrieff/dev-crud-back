@@ -12,7 +12,9 @@ export class CreateUserUseCase {
     email,
     password,
   }: ICreateUserDTO): Promise<User> {
-    const isExistUser = await this.userRepository.findOverlappyngUser(email);
+    const isExistUser = await this.userRepository.findOverlappingUserByEmail(
+      email
+    );
 
     if (isExistUser) {
       throw new Error("There is already a registered user with this email!");

@@ -28,9 +28,21 @@ export class InMemoryRepository implements IUserRepository {
     return user;
   }
 
-  async findOverlappyngUser(email: string): Promise<User | null> {
+  async findOverlappingUserByEmail(email: string): Promise<User | null> {
     const overlappyngUser = this.db_users.find((item) => {
       return item.email === email;
+    });
+
+    if (!overlappyngUser) {
+      return null;
+    }
+
+    return overlappyngUser;
+  }
+
+  async findOverlappingUserById(id: string): Promise<User | null> {
+    const overlappyngUser = this.db_users.find((item) => {
+      return item.id === id;
     });
 
     if (!overlappyngUser) {
