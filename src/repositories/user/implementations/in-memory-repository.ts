@@ -1,5 +1,6 @@
 import { User } from "../../../entities/user/user";
 import { IUserRepository } from "../IUser-repository";
+import { sign } from "jsonwebtoken";
 
 export class InMemoryRepository implements IUserRepository {
   private db_users: User[] = [];
@@ -24,6 +25,24 @@ export class InMemoryRepository implements IUserRepository {
     if (!user) {
       return null;
     }
+
+    return user;
+  }
+
+  async auth(user: User): Promise<User> {
+    const token = sign(
+      {
+        name: user.first_name,
+        email: user.email,
+      },
+      process.env.JWT_SECRET ?? "aa2553259db043518a820e9e827cd9e0",
+      {
+        subject: user.id,
+        expiresIn: "10d",
+      }
+    );
+
+    user.token = token;
 
     return user;
   }

@@ -5,7 +5,7 @@ import { User } from "../../../entities/user/user";
 
 describe("Create user", () => {
   const inMemoryRepository = new InMemoryRepository();
-  it("should be able to create new user", () => {
+  it("should be able to create new user", async () => {
     const createUserUseCase = new CreateUserUseCase(inMemoryRepository);
 
     expect(
