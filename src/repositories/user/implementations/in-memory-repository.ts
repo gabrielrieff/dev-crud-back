@@ -1,8 +1,7 @@
-import { hash } from "bcryptjs";
 import { User } from "../../../entities/user/user";
+import { IUpdateUserDTO } from "../../../use-case/user/update-user/update-user-DTO";
 import { IUserRepository } from "../IUser-repository";
 import { sign } from "jsonwebtoken";
-import { createEmailPathBase, transporter } from "../../../services/mailer";
 
 export class InMemoryRepository implements IUserRepository {
   private db_users: User[] = [];
@@ -55,6 +54,15 @@ export class InMemoryRepository implements IUserRepository {
         item.password = hashedPassword;
       }
     });
+  }
+
+  async updateUser(data: IUpdateUserDTO): Promise<User> {
+    const user = await this.db_users.find((item) => item.id === data.id);
+
+    if (user) {
+      Object.assign(user, data);
+    }
+    return user!;
   }
 
   async findOverlappingUserByEmail(email: string): Promise<User | null> {

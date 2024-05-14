@@ -10,7 +10,7 @@ export class RecoverUserUseCase {
     const user = await this.userRepository.findOverlappingUserByEmail(email);
 
     if (!user) {
-      throw new Error("There is already a registered user with this email!");
+      throw new Error("We couldn't find the registered user!");
     }
 
     const password = String(Math.floor(Math.random() * 1000000000));
