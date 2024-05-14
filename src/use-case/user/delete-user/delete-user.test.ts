@@ -11,10 +11,10 @@ describe("Delete user", () => {
 
   it("should be able to deletar usuario", async () => {
     const user = await createUserUseCase.execute({
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "",
+      first_name: "John",
+      last_name: "Doe",
+      email: "john@gmail.com",
+      password: "123123",
     });
 
     expect(deleteUserUseCase.execute({ id: user.id })).resolves.toBeUndefined();

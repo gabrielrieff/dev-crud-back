@@ -1,6 +1,8 @@
+import { hash } from "bcryptjs";
 import { User } from "../../../entities/user/user";
 import { IUserRepository } from "../IUser-repository";
 import { sign } from "jsonwebtoken";
+import { createEmailPathBase, transporter } from "../../../services/mailer";
 
 export class InMemoryRepository implements IUserRepository {
   private db_users: User[] = [];
@@ -45,6 +47,14 @@ export class InMemoryRepository implements IUserRepository {
     user.token = token;
 
     return user;
+  }
+
+  async recoverPassword(email: string, hashedPassword: string): Promise<void> {
+    await this.db_users.map((item) => {
+      if (item.email === email) {
+        item.password = hashedPassword;
+      }
+    });
   }
 
   async findOverlappingUserByEmail(email: string): Promise<User | null> {
