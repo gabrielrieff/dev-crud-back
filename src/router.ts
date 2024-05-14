@@ -1,26 +1,46 @@
 import { Router } from "express";
-import { CreateUserController } from "./controllers/user/create-user";
-import { DeleteUserController } from "./controllers/user/delete-user";
-import { DetailUserController } from "./controllers/user/detail-user";
+
 import { isAuthenticated } from "./middleware/isAuthenticated";
-import { AuthUserController } from "./controllers/user/auth-user";
-import { UpdateUserController } from "./controllers/user/update-user";
+
 import { CreateTodoController } from "./controllers/Todo/create-todo";
 import { DeleteTodoController } from "./controllers/Todo/delete-todo";
 import { FinishTodoController } from "./controllers/Todo/finish-todo";
 import { ListTodosController } from "./controllers/Todo/list-todos";
 import { UpdateTodoController } from "./controllers/Todo/update-todo";
-import { RecoverPasswordController } from "./controllers/user/recover-password";
+
+import { createUserController } from "./use-case/user/create-user";
+import { authUserController } from "./use-case/user/auth-user";
+import { detailUserController } from "./use-case/user/detail-user";
+import { updateUserController } from "./use-case/user/update-user";
+import { recoverUserController } from "./use-case/user/recover-user";
+import { deleteUserController } from "./use-case/user/delete-user";
 
 const router = Router();
 
 //user
-router.post("/user", new CreateUserController().handle);
-router.post("/session", new AuthUserController().handle);
-router.delete("/user/:id", isAuthenticated, new DeleteUserController().handle);
-router.get("/detail", isAuthenticated, new DetailUserController().handle);
-router.patch("/user", isAuthenticated, new UpdateUserController().handle);
-router.post("/recover-password", new RecoverPasswordController().handle);
+router.post("/user", (request, response) => {
+  return createUserController.handle(request, response);
+});
+
+router.post("/session", (request, response) => {
+  return authUserController.handle(request, response);
+});
+
+router.post("/recover-password", (request, response) => {
+  return recoverUserController.handle(request, response);
+});
+
+router.get("/detail", isAuthenticated, (request, response) => {
+  return detailUserController.handle(request, response);
+});
+
+router.patch("/user", isAuthenticated, (request, response) => {
+  return updateUserController.handle(request, response);
+});
+
+router.delete("/user/:id", isAuthenticated, (request, response) => {
+  return deleteUserController.handle(request, response);
+});
 
 //todo
 router.post("/todo", isAuthenticated, new CreateTodoController().handle);

@@ -16,6 +16,7 @@ export class CreateUserController {
 
       return res.status(201).json(user);
     } catch (error) {
+      console.log(error);
       return res.status(400).json({
         message: error.message || "Error while trying to create user",
       });

@@ -23,7 +23,7 @@ export class RecoverUserUseCase {
       password,
     });
 
-    transporter.sendMail({
+    await transporter.sendMail({
       to: {
         name: "dev-crud",
         address: "gabrielrieff1@gmail.com",
