@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { InMemoryRepository } from "../../../repositories/user/implementations/in-memory-repository";
+import { InMemoryUserRepository } from "../../../repositories/user/implementations/in-memory-repository";
 import { CreateUserUseCase } from "../../../use-case/user/create-user/create-user-use-case";
 import { DeleteUserUseCase } from "../../../use-case/user/delete-user/delete-user-use-case";
 
 describe("Delete user", () => {
-  const inMemoryRepository = new InMemoryRepository();
+  const inMemoryRepository = new InMemoryUserRepository();
 
   const createUserUseCase = new CreateUserUseCase(inMemoryRepository);
   const deleteUserUseCase = new DeleteUserUseCase(inMemoryRepository);

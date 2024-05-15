@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { InMemoryRepository } from "../../../repositories/user/implementations/in-memory-repository";
+import { InMemoryUserRepository } from "../../../repositories/user/implementations/in-memory-repository";
 import { CreateUserUseCase } from "../create-user/create-user-use-case";
 import { RecoverUserUseCase } from "./recover-user-use-case";
 
 describe("Recover password user", async () => {
-  const inMemoryRepository = new InMemoryRepository();
+  const inMemoryRepository = new InMemoryUserRepository();
   const createUserUseCase = new CreateUserUseCase(inMemoryRepository);
 
   await createUserUseCase.execute({

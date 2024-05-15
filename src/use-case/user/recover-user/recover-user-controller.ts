@@ -1,4 +1,4 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { RecoverUserUseCase } from "./recover-user-use-case";
 
 export class RecoverUserController {

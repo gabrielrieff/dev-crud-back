@@ -3,7 +3,7 @@ import { IUpdateUserDTO } from "../../../use-case/user/update-user/update-user-D
 import { IUserRepository } from "../IUser-repository";
 import { sign } from "jsonwebtoken";
 
-export class InMemoryRepository implements IUserRepository {
+export class InMemoryUserRepository implements IUserRepository {
   private db_users: User[] = [];
 
   async create(data: User): Promise<User> {

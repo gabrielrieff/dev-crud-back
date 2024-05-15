@@ -8,7 +8,6 @@ export class RecoverUserUseCase {
 
   async execute({ email }: IRecoverUserDTO): Promise<void> {
     const user = await this.userRepository.findOverlappingUserByEmail(email);
-
     if (!user) {
       throw new Error("We couldn't find the registered user!");
     }
@@ -18,12 +17,11 @@ export class RecoverUserUseCase {
     const hashedPassword = await hash(password, 8);
 
     await this.userRepository.recoverPassword(email, hashedPassword);
-
     const template = await createEmailPathBase("auth/recover-password", {
       password,
     });
 
-    await transporter.sendMail({
+    transporter.sendMail({
       to: {
         name: "dev-crud",
         address: "gabrielrieff1@gmail.com",
@@ -35,5 +33,6 @@ export class RecoverUserUseCase {
       subject: "Recuperação de Senha",
       html: template,
     });
+    console.log(true);
   }
 }

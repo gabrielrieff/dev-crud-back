@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { InMemoryRepository } from "../../../repositories/user/implementations/in-memory-repository";
+import { InMemoryUserRepository } from "../../../repositories/user/implementations/in-memory-repository";
 import { CreateUserUseCase } from "../create-user/create-user-use-case";
 import { UpdateUserUseCase } from "./update-user-use-case";
 import { User } from "../../../entities/user/user";
 
 describe("Update user", async () => {
-  const inMemoryRepository = new InMemoryRepository();
+  const inMemoryRepository = new InMemoryUserRepository();
   const createUserUseCase = new CreateUserUseCase(inMemoryRepository);
   const updateUseUseCase = new UpdateUserUseCase(inMemoryRepository);
 

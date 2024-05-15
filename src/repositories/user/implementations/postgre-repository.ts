@@ -4,7 +4,7 @@ import { IUpdateUserDTO } from "../../../use-case/user/update-user/update-user-D
 import { IUserRepository } from "../IUser-repository";
 import { sign } from "jsonwebtoken";
 
-export class PostgreSQLRepository implements IUserRepository {
+export class PostgreSQLUserRepository implements IUserRepository {
   async create({
     id,
     first_name,
