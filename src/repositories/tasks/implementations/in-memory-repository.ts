@@ -25,6 +25,22 @@ export class InMemoryTaskRepository implements ITaskRepository {
     return task!;
   }
 
+  async listTasks(
+    userId: string,
+    startOfDay: Date,
+    endOfDay: Date
+  ): Promise<Task[]> {
+    const tasks = await this.db_tasks.filter(
+      (task) =>
+        task.userId === userId &&
+        task.created_at! <= startOfDay &&
+        task.created_at! >= endOfDay
+    );
+
+    //console.log(tasks);
+    return tasks;
+  }
+
   async findOverlappingTaskById(id: string): Promise<Task | null> {
     const overlappyngTask = this.db_tasks.find((item) => {
       return item.id === id;
