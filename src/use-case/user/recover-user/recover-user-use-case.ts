@@ -33,6 +33,5 @@ export class RecoverUserUseCase {
       subject: "Recuperação de Senha",
       html: template,
     });
-    console.log(true);
   }
 }

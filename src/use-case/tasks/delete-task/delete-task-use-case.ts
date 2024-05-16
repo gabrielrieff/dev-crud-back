@@ -5,7 +5,9 @@ export class DeleteTaskUseCase {
   constructor(private taskRepository: ITaskRepository) {}
 
   async execute({ id }: IDeleteTaskDTO) {
-    const overlappyngTask = this.taskRepository.findOverlappingTaskById(id);
+    const overlappyngTask = await this.taskRepository.findOverlappingTaskById(
+      id
+    );
 
     if (!overlappyngTask) {
       throw new Error("We couldn't find the Task");
