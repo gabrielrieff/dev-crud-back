@@ -18,6 +18,13 @@ export class InMemoryTaskRepository implements ITaskRepository {
     }
   }
 
+  async finish(id: string): Promise<Task> {
+    const task = await this.db_tasks.find((task) => task.id === id);
+
+    task!.finish_at = new Date();
+    return task!;
+  }
+
   async findOverlappingTaskById(id: string): Promise<Task | null> {
     const overlappyngTask = this.db_tasks.find((item) => {
       return item.id === id;

@@ -19,6 +19,19 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
     });
   }
 
+  async finish(id: string): Promise<Task> {
+    const task = await prismaClient.todo.update({
+      where: {
+        id: id,
+      },
+      data: {
+        finish_at: new Date(),
+      },
+    });
+
+    return task;
+  }
+
   async findOverlappingTaskById(id: string): Promise<Task | null> {
     const overlappyngTask = await prismaClient.todo.findFirst({
       where: {
