@@ -1,4 +1,5 @@
 import { Task } from "../../../entities/task/task";
+import { IUpdateTaskDTO } from "../../../use-case/tasks/update-task/update-task-DTO";
 import { ITaskRepository } from "../ITask-repository";
 
 export class InMemoryTaskRepository implements ITaskRepository {
@@ -36,9 +37,15 @@ export class InMemoryTaskRepository implements ITaskRepository {
         task.created_at! <= startOfDay &&
         task.created_at! >= endOfDay
     );
-
-    //console.log(tasks);
     return tasks;
+  }
+
+  async update(task: Task): Promise<void> {
+    await this.db_tasks.find((item) => {
+      if (item.id === task.id) {
+        Object.assign(item, task);
+      }
+    });
   }
 
   async findOverlappingTaskById(id: string): Promise<Task | null> {

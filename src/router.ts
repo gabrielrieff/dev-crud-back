@@ -2,18 +2,18 @@ import { Router } from "express";
 
 import { isAuthenticated } from "./middleware/isAuthenticated";
 
-import { CreateTodoController } from "./controllers/Todo/create-todo";
-import { DeleteTodoController } from "./controllers/Todo/delete-todo";
-import { FinishTodoController } from "./controllers/Todo/finish-todo";
-import { ListTodosController } from "./controllers/Todo/list-todos";
-import { UpdateTodoController } from "./controllers/Todo/update-todo";
-
 import { createUserController } from "./use-case/user/create-user";
 import { authUserController } from "./use-case/user/auth-user";
 import { detailUserController } from "./use-case/user/detail-user";
 import { updateUserController } from "./use-case/user/update-user";
 import { recoverUserController } from "./use-case/user/recover-user";
 import { deleteUserController } from "./use-case/user/delete-user";
+
+import { createTaskController } from "./use-case/tasks/create-task";
+import { deleteTaskController } from "./use-case/tasks/delete-task";
+import { finishTaskController } from "./use-case/tasks/finish-task";
+import { listTaskController } from "./use-case/tasks/list-todo";
+import { updateTaskController } from "./use-case/tasks/update-task";
 
 const router = Router();
 
@@ -43,14 +43,20 @@ router.delete("/user/:id", isAuthenticated, (request, response) => {
 });
 
 //todo
-router.post("/todo", isAuthenticated, new CreateTodoController().handle);
-router.delete("/todo/:id", isAuthenticated, new DeleteTodoController().handle);
-router.patch("/todo/:id", isAuthenticated, new FinishTodoController().handle);
-router.get("/todo", isAuthenticated, new ListTodosController().handle);
-router.patch(
-  "/todo-update/:id",
-  isAuthenticated,
-  new UpdateTodoController().handle
-);
+router.post("/todo", isAuthenticated, (request, response) => {
+  return createTaskController.handle(request, response);
+});
+router.delete("/todo/:id", isAuthenticated, (request, response) => {
+  return deleteTaskController.handle(request, response);
+});
+router.patch("/todo/:id", isAuthenticated, (request, response) => {
+  return finishTaskController.handle(request, response);
+});
+router.get("/todo", isAuthenticated, (request, response) => {
+  return listTaskController.handle(request, response);
+});
+router.patch("/todo-update/:id", isAuthenticated, (request, response) => {
+  return updateTaskController.handle(request, response);
+});
 
 export { router };

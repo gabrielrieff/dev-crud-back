@@ -4,11 +4,11 @@ import { ITaskRepository } from "../ITask-repository";
 
 export class PostgreSQLTasksRepository implements ITaskRepository {
   async create(task: Task): Promise<Task> {
-    const Todo = await prismaClient.todo.create({
+    await prismaClient.todo.create({
       data: task,
     });
 
-    return Todo;
+    return task;
   }
 
   async delete(id: string): Promise<void> {
@@ -20,14 +20,14 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
   }
 
   async finish(id: string): Promise<Task> {
-    const task = await prismaClient.todo.update({
+    const task = (await prismaClient.todo.update({
       where: {
         id: id,
       },
       data: {
         finish_at: new Date(),
       },
-    });
+    })) as Task;
 
     return task;
   }
@@ -37,7 +37,7 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
     startOfDay: Date,
     endOfDay: Date
   ): Promise<Task[]> {
-    const tasks = await prismaClient.todo.findMany({
+    const tasks = (await prismaClient.todo.findMany({
       where: {
         userId: userId,
         created_at: {
@@ -48,17 +48,24 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
       orderBy: {
         created_at: "asc",
       },
-    });
+    })) as Task[];
 
     return tasks;
   }
 
+  async update(task: Task): Promise<void> {
+    await prismaClient.todo.update({
+      where: { id: task.id },
+      data: task,
+    });
+  }
+
   async findOverlappingTaskById(id: string): Promise<Task | null> {
-    const overlappyngTask = await prismaClient.todo.findFirst({
+    const overlappyngTask = (await prismaClient.todo.findFirst({
       where: {
         id: id,
       },
-    });
+    })) as Task;
 
     if (!overlappyngTask) {
       return null;

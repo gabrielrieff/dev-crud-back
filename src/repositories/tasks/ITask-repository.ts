@@ -5,6 +5,7 @@ export interface ITaskRepository {
   delete(id: string): Promise<void>;
   finish(id: string): Promise<Task>;
   listTasks(userId: string, startOfDay: Date, endOfDay: Date): Promise<Task[]>;
+  update(task: Task): Promise<void>;
 
   findOverlappingTaskById(id: string): Promise<Task | null>;
 }
