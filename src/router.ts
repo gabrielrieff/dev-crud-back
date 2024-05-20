@@ -46,15 +46,19 @@ router.delete("/user/:id", isAuthenticated, (request, response) => {
 router.post("/todo", isAuthenticated, (request, response) => {
   return createTaskController.handle(request, response);
 });
+
 router.delete("/todo/:id", isAuthenticated, (request, response) => {
   return deleteTaskController.handle(request, response);
 });
+
 router.patch("/todo/:id", isAuthenticated, (request, response) => {
   return finishTaskController.handle(request, response);
 });
+
 router.get("/todo", isAuthenticated, (request, response) => {
   return listTaskController.handle(request, response);
 });
+
 router.patch("/todo-update/:id", isAuthenticated, (request, response) => {
   return updateTaskController.handle(request, response);
 });

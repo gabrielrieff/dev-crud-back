@@ -8,7 +8,7 @@ export class CreateTaskController {
     const { title, description } = req.body;
 
     try {
-      const task = this.createTaskUseCase.execute({
+      const task = await this.createTaskUseCase.execute({
         title,
         description,
         userId,

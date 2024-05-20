@@ -34,8 +34,8 @@ export class ListTaskUseCase {
 
     const tasks = await this.taskRepository.listTasks(
       userId,
-      endOfDay,
-      startOfDay
+      startOfDay,
+      endOfDay
     );
 
     return tasks;

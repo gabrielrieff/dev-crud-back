@@ -6,7 +6,6 @@ import { UpdateTaskUseCase } from "./update-task-use-case";
 
 import { CreateUserUseCase } from "../../user/create-user/create-user-use-case";
 import { CreateTaskUseCase } from "../create-task/create-task-use-case";
-import { Task } from "../../../entities/task/task";
 
 describe("Return list tasks", async () => {
   const inMemoryTaskRepository = new InMemoryTaskRepository();

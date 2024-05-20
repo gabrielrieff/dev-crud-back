@@ -2,30 +2,54 @@ import { v4 } from "uuid";
 
 export class Task {
   public readonly id!: string;
+  public readonly created_at!: Date;
+  public readonly update_at!: Date;
 
   public title!: string;
   public description!: string | null;
   public userId!: string;
-  public created_at: Date;
-  public update_at: Date;
   public finish_at?: Date | null;
 
-  constructor(props: Omit<Task, "id">, id?: string) {
+  constructor(
+    props: {
+      title: string;
+      description: string | null;
+      userId: string;
+      finish_at?: Date | null;
+    },
+    id?: string,
+    created_at?: Date,
+    update_at?: Date
+  ) {
     Object.assign(this, props);
 
-    if (!id) {
+    if (!this.id) {
       this.id = v4();
     }
 
-    this.created_at = new Date();
-    this.update_at = new Date();
+    if (!this.created_at) {
+      this.created_at = new Date();
+    }
+
+    if (!this.update_at) {
+      this.update_at = new Date();
+    }
   }
 
-  changeTitle(title: string) {
-    this.title = title;
+  static create(props: { title: string; description: string; userId: string }) {
+    const task = new Task(props);
+    return task;
   }
 
-  changeDescription(description: string) {
-    this.description = description;
-  }
+  // changeTitle(title: string) {
+  //   if (this.title !== title) {
+  //     this.title = title;
+  //   }
+  // }
+
+  // changeDescription(description: string) {
+  //   if (this.description !== description) {
+  //     this.description = description;
+  //   }
+  // }
 }
