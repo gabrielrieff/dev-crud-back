@@ -83,6 +83,12 @@ export class PostgreSQLUserRepository implements IUserRepository {
   }
 
   async delete(id: string): Promise<void> {
+    await prismaClient.todo.deleteMany({
+      where: {
+        userId: id,
+      },
+    });
+
     await prismaClient.user.delete({
       where: {
         id: id,
