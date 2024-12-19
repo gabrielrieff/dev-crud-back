@@ -8,23 +8,11 @@ export class ListTaskUseCase {
     private taskRepository: ITaskRepository,
     private userRepository: IUserRepository
   ) {}
-  private readonly today = new Date();
-
-  private readonly start = new Date(
-    this.today.getFullYear(),
-    this.today.getMonth(),
-    this.today.getDate()
-  );
-  private readonly end = new Date(
-    this.today.getFullYear(),
-    this.today.getMonth(),
-    this.today.getDate() + 1
-  );
 
   async execute({
     userId,
-    endOfDay = this.end,
-    startOfDay = this.start,
+    endOfDay,
+    startOfDay,
   }: IListTaskDTO): Promise<Task[]> {
     const user = await this.userRepository.findOverlappingUserById(userId);
 
@@ -32,12 +20,22 @@ export class ListTaskUseCase {
       throw new Error("User not found");
     }
 
-    const tasks = await this.taskRepository.listTasks(
-      userId,
-      startOfDay,
-      endOfDay
-    );
+    const { startDay, endDay } = getStartEndOfDay(startOfDay, endOfDay);
+
+    const tasks = await this.taskRepository.listTasks(userId, startDay, endDay);
 
     return tasks;
   }
+}
+
+function getStartEndOfDay(
+  start: string,
+  end: string
+): { startDay: Date; endDay: Date } {
+  const startDay = new Date(start);
+
+  const endDay = new Date(end);
+  endDay.setDate(endDay.getDate() + 1);
+
+  return { startDay, endDay };
 }

@@ -55,7 +55,7 @@ router.patch("/todo/:id", isAuthenticated, (request, response) => {
   return finishTaskController.handle(request, response);
 });
 
-router.get("/todo", isAuthenticated, (request, response) => {
+router.get("/todos", isAuthenticated, (request, response) => {
   return listTaskController.handle(request, response);
 });
 

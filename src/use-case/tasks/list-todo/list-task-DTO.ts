@@ -1,5 +1,5 @@
 export type IListTaskDTO = {
   userId: string;
-  startOfDay?: Date;
-  endOfDay?: Date;
+  startOfDay: string;
+  endOfDay: string;
 };

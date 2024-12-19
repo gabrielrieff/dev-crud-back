@@ -29,27 +29,27 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
       },
     });
 
-    return task;
+    return new Task(task);
   }
 
   async listTasks(
     userId: string,
-    startOfDay: Date,
-    endOfDay: Date
+    startDay: Date,
+    endDay: Date
   ): Promise<Task[]> {
     const tasks = await prismaClient.todo.findMany({
       where: {
         userId: userId,
         created_at: {
-          gte: startOfDay,
-          lt: endOfDay,
+          gte: startDay,
+          lt: endDay,
         },
       },
       orderBy: {
         created_at: "asc",
       },
     });
-    return tasks;
+    return tasks.map((task) => new Task(task));
   }
 
   async update(task: Task): Promise<void> {
@@ -70,6 +70,6 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
       return null;
     }
 
-    return overlappyngTask;
+    return new Task(overlappyngTask);
   }
 }
