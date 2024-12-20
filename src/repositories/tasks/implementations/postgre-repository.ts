@@ -35,7 +35,8 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
   async listTasks(
     userId: string,
     startDay: Date,
-    endDay: Date
+    endDay: Date,
+    status?: number
   ): Promise<Task[]> {
     const tasks = await prismaClient.todo.findMany({
       where: {
@@ -44,6 +45,17 @@ export class PostgreSQLTasksRepository implements ITaskRepository {
           gte: startDay,
           lt: endDay,
         },
+        ...(status === 1
+          ? {
+              finish_at: {
+                not: null,
+              },
+            }
+          : status === 0
+          ? {
+              finish_at: null,
+            }
+          : {}),
       },
       orderBy: {
         created_at: "asc",

@@ -13,6 +13,7 @@ export class ListTaskUseCase {
     userId,
     endOfDay,
     startOfDay,
+    status,
   }: IListTaskDTO): Promise<Task[]> {
     const user = await this.userRepository.findOverlappingUserById(userId);
 
@@ -20,9 +21,21 @@ export class ListTaskUseCase {
       throw new Error("User not found");
     }
 
+    var transformStatus: number | undefined;
+    if (status !== undefined) {
+      transformStatus = parseInt(status);
+    } else {
+      transformStatus = status;
+    }
+
     const { startDay, endDay } = getStartEndOfDay(startOfDay, endOfDay);
 
-    const tasks = await this.taskRepository.listTasks(userId, startDay, endDay);
+    const tasks = await this.taskRepository.listTasks(
+      userId,
+      startDay,
+      endDay,
+      transformStatus
+    );
 
     return tasks;
   }
