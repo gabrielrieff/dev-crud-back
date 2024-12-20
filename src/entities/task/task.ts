@@ -2,23 +2,23 @@ import { v4 } from "uuid";
 
 export class Task {
   public readonly id!: string;
-  public readonly created_at!: Date;
   public readonly update_at!: Date;
 
+  public userId!: string;
   public title!: string;
   public description!: string | null;
-  public userId!: string;
+  public created_at!: Date;
   public finish_at?: Date | null;
 
   constructor(
     props: {
+      userId: string;
       title: string;
       description: string | null;
-      userId: string;
+      created_at: Date;
       finish_at?: Date | null;
     },
     id?: string,
-    created_at?: Date,
     update_at?: Date
   ) {
     Object.assign(this, props);
@@ -28,7 +28,7 @@ export class Task {
     }
 
     if (!this.created_at) {
-      this.created_at = new Date();
+      this.created_at = new Date(this.created_at);
     }
 
     if (!this.update_at) {
@@ -36,7 +36,12 @@ export class Task {
     }
   }
 
-  static create(props: { title: string; description: string; userId: string }) {
+  static create(props: {
+    userId: string;
+    title: string;
+    description: string;
+    created_at: Date;
+  }) {
     const task = new Task(props);
     return task;
   }

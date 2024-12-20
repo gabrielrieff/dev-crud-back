@@ -9,7 +9,12 @@ export class CreateTaskUseCase {
     private userRepository: IUserRepository
   ) {}
 
-  async execute({ title, description, userId }: ICreateTaskDTO): Promise<Task> {
+  async execute({
+    title,
+    description,
+    created_at,
+    userId,
+  }: ICreateTaskDTO): Promise<Task> {
     const user = await this.userRepository.findOverlappingUserById(userId);
 
     if (!user) {
@@ -17,9 +22,10 @@ export class CreateTaskUseCase {
     }
 
     const task = new Task({
+      userId,
       title,
       description,
-      userId,
+      created_at: new Date(created_at),
     });
 
     await this.taskRepository.create(task);
